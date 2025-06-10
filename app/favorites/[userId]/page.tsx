@@ -1,18 +1,33 @@
 "use client"
 
-import React from 'react'
-import { useParams } from 'next/navigation';
+import React, { useEffect } from 'react'
+import { useParams, useRouter } from 'next/navigation';
 import { useFavorites } from '@/hooks/useCapstones';
 import FavIdeas from './FavIdeas';
 import Header from '@/components/Header';
 import SpinnerCircle2 from '@/components/spinner-08';
+import { useCheckAuth } from '@/hooks/useCheckAuth';
 
 const page = () => {
-
+const router = useRouter();
+const { checkAuthAndRedirect } = useCheckAuth();
 const params = useParams();
 const userId = params.userId as string;
 
-if (!userId) return null; // or a loading spinner
+useEffect(() => {
+  const checkAccess = async () => {
+    const user = await checkAuthAndRedirect();
+    if (!user) return;
+    
+    if (user.id !== userId) {
+      router.push(`/favorites/${user.id}`);
+    }
+  };
+  
+  checkAccess();
+}, [userId, checkAuthAndRedirect, router]);
+
+if (!userId) return null; 
 const { data: favorites, isLoading, isFetching } = useFavorites(userId);
 console.log(favorites)
 
