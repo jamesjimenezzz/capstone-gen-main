@@ -1,4 +1,4 @@
-import { CapstoneIdea, deleteFavorite, fetchCapstones, insertFavorite } from "@/services/capstone-service";
+import { CapstoneIdea, deleteFavorite, fetchCapstones, fetchFavorites, insertFavorite } from "@/services/capstone-service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useCapstones = (
@@ -32,3 +32,11 @@ export const useDeleteFavorite = () => {
     },
   });
 };
+
+export const useFavorites = (userId: string) => { 
+  return useQuery({
+    queryKey: ["favorites", userId],
+    queryFn: () => fetchFavorites(userId),
+    enabled: !!userId,
+  })
+}

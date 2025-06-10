@@ -34,7 +34,7 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className="px-2 py-5 max-w-[1200px] mx-auto ">
+    <div className="px-2 pt-3 max-w-[1200px] mx-auto ">
       <Header />
       <div className="flex gap-10 min-h-[85vh]">
         <Aside refetch={refetch} isFetching={isFetching} />

@@ -24,13 +24,15 @@ Format the response strictly as a JSON array:
     "industry": industry,
     "project_type": projectType,
     "difficulty": difficulty,
-    "capstone_id": "${uuidv4()}",
+    "capstone_id": "generate-a-unique-uuid-here",
     "title": "",
     "feasibility": "",
     "description": "",
     "tags": ["", "", ""]
   }
-]`;
+]
+
+Note: For each project idea, generate a unique UUID for the capstone_id field.`;
 
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",

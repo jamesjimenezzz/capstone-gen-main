@@ -66,3 +66,20 @@ export const deleteFavorite = async (id: string) => {
 
   if (error) throw new Error(error.message);
 };
+
+export const fetchFavorites = async (user_id: string): Promise<CapstoneIdea[]> => {
+  const { data, error } = await supabase
+    .from("capstones")
+    .select("*")
+    .eq("user_id", user_id) as {
+      data: CapstoneIdea[] | null;
+      error: any;
+    };
+
+  if (error) {
+    console.error("[Supabase] fetchFavorites error:", error);
+    throw new Error("Failed to fetch favorites");
+  }
+
+  return data ?? [];
+};

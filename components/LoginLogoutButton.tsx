@@ -34,7 +34,7 @@ const LoginButton = () => {
   }
   return (
     <Button
-      variant="outline"
+      variant="link"
       onClick={() => {
         router.push("/login");
       }}

@@ -12,7 +12,11 @@ import { CapstoneIdea } from "../services/capstone-service";
 import { useInsertFavorite } from "@/hooks/useCapstones";
 import { useDeleteFavorite } from "@/hooks/useCapstones";
 
+  import { useCheckAuth } from "@/hooks/useCheckAuth";
+
 const Ideas = ({ idea }: { idea: CapstoneIdea }) => {
+
+  const {checkAuthAndRedirect} = useCheckAuth();
 
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -24,13 +28,15 @@ const Ideas = ({ idea }: { idea: CapstoneIdea }) => {
       <Card>
         <CardHeader className="">
           <div className="flex  justify-between">
-            <CardTitle>{idea.capstone_id}</CardTitle>
+            <CardTitle>{idea.title}</CardTitle>
             <CardTitle className=" ">
               <Star
                 className={`w-4 h-4 text-muted-foreground  hover:text-foreground cursor-pointer ${
                   isFavorite ? "text-yellow-500" : ""
                 }`}
-                onClick={() => {
+                onClick={async () => {
+                  const user = await checkAuthAndRedirect();
+                  if (!user) return;
                   if (isFavorite) {
                     deleteFavorite(idea.capstone_id);
                     setIsFavorite(false);

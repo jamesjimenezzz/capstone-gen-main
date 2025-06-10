@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import Header from "@/components/Header";
+import { Toaster } from "@/components/ui/sonner"
+
 
 import Providers from "@/components/Providers";
 
@@ -22,7 +25,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(" ", inter.className)}>
-        <Providers>{children}</Providers>
+        <Providers>
+         <Toaster />
+          {children}
+          </Providers>
       </body>
     </html>
   );
